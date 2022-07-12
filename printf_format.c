@@ -9,6 +9,7 @@
  * @arg: the argument
  *
  * Return: no of characters printed
+ * Output to stdout
  */
 
 int identifier(char len, va_list arg)
