@@ -3,9 +3,8 @@
 
 #include <stdarg.h>
 
-
-int _printf(const char *format, ...);
 int _putchar(char c);
+int _printf(const char *format, ...);
 
 
 /**
@@ -18,7 +17,7 @@ typedef struct func_struct
 {
 	char *identifier;
 	int (*print)(va_list);
-} func_struct;
+} identifier;
 
 
 
