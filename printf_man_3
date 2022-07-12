@@ -1,0 +1,27 @@
+This is the printf-man-3...
+
+Function
+	printf - function that produces output according to a format.
+
+In addition;
+	#include <stdio.h>
+	#include <stdarg.h>
+	#include "main.h"
+
+Details;
+	function to produce output according to a format.
+	%c - a character
+	%s - a string
+	%% - a percentage mark
+	%d - a decimal
+	i - an integer in base 10
+
+Output;
+	function to return the number of characters printed.
+
+Example;
+	For the function to print int '1', length of 20 and string of "five";
+	_printf("%d %d %s", '1', 20, "five");
+
+Contributors;
+	Kelvin Kiiru and Faith Liyosi
