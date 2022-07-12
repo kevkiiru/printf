@@ -9,16 +9,16 @@ int _putchar(char c);
 
 
 /**
- * struct identifier_struct - definition structure 
+ * struct func_struct - definition structure 
  * @identifier: type
  * @print: function to print
 */
 
-typedef struct identifier_struct
+typedef struct func_struct
 {
 	char *identifier;
 	int (*print)(va_list);
-} identifier_struct;
+} func_struct;
 
 
 
