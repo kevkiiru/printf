@@ -47,5 +47,5 @@ int ev_print_func(const char *s, int index)
 			index = first_index;
 		}
 	}
-	return ();
+	return (j);
 }
