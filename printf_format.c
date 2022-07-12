@@ -1,45 +1,11 @@
 #include "main.h"
 
 /**
-<<<<<<< HEAD
- * identifier - to return special characters
- * @len: next character
- * @arg: the argument
+ * _printf - formatted output conversion and print data.
+ * @format: input string.
  *
- * Return: no of characters printed
- * Output to stdout
+ * Return: number of chars printed.
  */
-
-int identifier(char len, va_list arg)
-{
-	int func_find;
-
-	func_struct func[] = {
-		{"c", print_char},
-		{"s", print_string},
-		{"%%", print_%},
-		{"d", print_integer},
-		{"i", print_integer_base10},
-		{NULL, NULL}
-	};
-
-	for (func_find = 0; func[func_find].identifier != NULL; func_find++)
-	{
-		if (func[func_find].identifier[0] == len)
-			return (func[func_find].print(arg));
-	}
-	return (0);
-}
-
-/**
-=======
->>>>>>> db3e0c7b4889040a0cac081e5669120785c38a4c
- * _printf - main function
- * @format: the string
- *
- * Return: the characters printed
- */
-
 int _printf(const char *format, ...)
 {
 	unsigned int i = 0, len = 0, ibuf = 0;
@@ -81,5 +47,5 @@ int _printf(const char *format, ...)
 			;
 	}
 	print_buf(buffer, ibuf), free(buffer), va_end(arguments);
-	return (len);
+	return ();
 }
