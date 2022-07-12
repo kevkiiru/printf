@@ -1,74 +1,86 @@
 #include <stdio.h>
 #include <stdarg.h>
+#include <stdlib.h>
 #include "main.h"
 
 /**
- * if_error - to return if error
- * @format: the format
+ * identifier - to return special characters
+ * @len: next character
+ * @arg: the argument
  *
+ * Return: no of characters printed
  */
 
-void if_error(const char *format)
+int identifier(char len, va_list arg)
 {
-	if (!format || !format)
+	int func_find;
+
+	func_struct func[] = {
+		{"c", print_char};
+		{"s", print_string};
+		{"%%", print_%};
+		{NULL, NULL}
+	};
+
+	for (func_find = 0; func[func_find].identifier != NULL; func_find++)
 	{
-		write(1, "error", 6);
-		exit(98);
+		if (func[func_find].identifier[0] == len)
+			return (func[func_find].print(arg));
 	}
+	return (0);
 }
 
 /**
- * _printf - function to print anything
- * @format: the format of the string
- * Return: the printed output
+ * _printf - main function
+ * @format: format of the string
+ *
+ * Return: no of characters printed if true and -1 otherwise
  */
 
 int _printf(const char *format, ...)
 {
-	int a, b, convr, flag;
-	char *buffer, *conv, *format_str;
-	va_list list_a;
+	unsigned int a;
+	int print_ident = 0, char_print = 0;
+	va_list arg;
 
-	if_error(format);
-	buffer = malloc(BUF_LENG * sizeof(char));
-	_flush(buffer);
-	va_start(list_a, format), flag = b = 0;
+	va_start(arg, format);
+
+	if (format == NULL)
+		return (-1);
 
 	for (a = 0; format[a] != '\0'; a++)
 	{
-		if (format[a] != '\0')
+		if (format[a] != "%")
 		{
-			fill_buffer(buffer, format + a, b, 1);
-			a += 1;
-			b += 1;
+			_putchar(format[a]);
+			char_print++;
+			continue;
 		}
 
-		if (format[a] == "%")
+		if (format[a + 1] == "%")
 		{
-			flag = 1, conv = grab_format(format + a);
-			if (format[a + 1] == '%' || conv == NULL)
-			{
-				flag = (flag == 0) ? 1 : 0;
-				fill_buffer(buffer, format + a, b, 1);
-				a += 2;
-				b += 1;
-			}
+			_putchar("%");
+			char_print++;
+			a++;
+			continue;
 		}
 
-		if (flag == 1)
+		if (format[a + 1] == '\0')
+			return (-1);
+
+		print_ident = identifier(format[a + 1], arg);
+
+		if (print_ident == -1 || print_ident != 0)
+			a++;
+		if (print_ident > 0)
+			char_print += print_ident;
+		if (print_ident == 0)
 		{
-			flag = 0;
-			conv = grab_format(format + a);
-			convr = _strlen(conv);
-			format_str = get_mstring_func(conv[convr - 1])(conv, list_a);
-			free(conv);
-			fill_buffer(buffer, format_str, b, _strlen(format_str));
-			b = b + _strlen(format_str);
-			free(format_str), a += convr;
+			_putchar("%");
+			char_print++;
 		}
 	}
 
-	print_buffer(buffer, b);
-	free(buffer);
-	return (b);
+	va_end(arg);
+	return (char_print);
 }
