@@ -17,11 +17,11 @@ int identifier(char len, va_list arg)
 	int func_find;
 
 	func_struct func[] = {
-		{"c", print_char};
-		{"s", print_string};
-		{"%%", print_%};
-		{"d", print_integer};
-		{"i", print_integer_base10};
+		{"c", print_char},
+		{"s", print_string},
+		{"%%", print_%},
+		{"d", print_integer},
+		{"i", print_integer_base10},
 		{NULL, NULL}
 	};
 

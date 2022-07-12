@@ -2,22 +2,21 @@
 #define MAIN_H
 
 #include <stdarg.h>
-
-int _putchar(char c);
-int _printf(const char *format, ...);
+#include <unistd.h>
+#include <stdlib.h>
 
 
 /**
- * struct func_struct - definition structure 
- * @identifier: type
- * @print: function to print
+ * struct print - definition structure 
+ * @type_arg: type
+ * @f: function to print
 */
 
-typedef struct func_struct
+typedef struct print
 {
-	char *identifier;
-	int (*print)(va_list);
-} func_struct;
+	char *type_arg;
+	int (*f)(va_list, char *, unsigned int);
+} print_t;
 
 
 
