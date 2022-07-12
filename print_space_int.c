@@ -34,5 +34,5 @@ int prinsint(va_list arguments, char *buf, unsigned int ibuf)
 	{
 		ibuf = handl_buf(buf, ((int_in / div) % 10) + '0', ibuf);
 	}
-	return ();
+	return (i + 1);
 }
