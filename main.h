@@ -9,6 +9,19 @@ int _putchar(char c);
 void if_error(const char *format);
 
 
+/**
+ * struct identifier_struct - definition structure 
+ * @identifier: type
+ * @print: function to print
+*/
+
+typedef struct identifier_struct
+{
+	char *identifier;
+	int (*print)(va_list);
+} identifier_struct;
+
+
 
 
 
