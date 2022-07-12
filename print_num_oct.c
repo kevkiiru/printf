@@ -41,5 +41,5 @@ int prinnoct(va_list arguments, char *buf, unsigned int ibuf)
 	}
 	free(binary);
 	free(octal);
-	return ();
+	return (count + 1);
 }
