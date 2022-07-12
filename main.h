@@ -17,7 +17,7 @@ typedef struct func_struct
 {
 	char *identifier;
 	int (*print)(va_list);
-} identifier;
+} func_struct;
 
 
 
