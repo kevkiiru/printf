@@ -9,10 +9,10 @@
  */
 int print_chr(va_list arguments, char *buf, unsigned int ibuf)
 {
-	char c;
+	char a;
 
-	c = va_arg(arguments, int);
-	handl_buf(buf, c, ibuf);
+	a = va_arg(arguments, int);
+	handl_buf(buf, a, ibuf);
 
-	return ();
+	return (1);
 }
