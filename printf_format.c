@@ -1,89 +1,52 @@
-#include <stdio.h>
-#include <stdarg.h>
-#include <stdlib.h>
 #include "main.h"
 
 /**
- * identifier - to return special characters
- * @len: next character
- * @arg: the argument
- *
- * Return: no of characters printed
- * Output to stdout
- */
-
-int identifier(char len, va_list arg)
-{
-	int func_find;
-
-	func_struct func[] = {
-		{"c", print_char};
-		{"s", print_string};
-		{"%%", print_%};
-		{"d", print_integer};
-		{"i", print_integer_base10};
-		{NULL, NULL}
-	};
-
-	for (func_find = 0; func[func_find].identifier != NULL; func_find++)
-	{
-		if (func[func_find].identifier[0] == len)
-			return (func[func_find].print(arg));
-	}
-	return (0);
-}
-
-/**
  * _printf - main function
- * @format: format of the string
+ * @format: the string
  *
- * Return: no of characters printed if true and -1 otherwise
+ * Return: the characters printed
  */
 
 int _printf(const char *format, ...)
 {
-	unsigned int a;
-	int print_ident = 0, char_print = 0;
-	va_list arg;
+	unsigned int i = 0, len = 0, ibuf = 0;
+	va_list arguments;
+	int (*function)(va_list, char *, unsigned int);
+	char *buffer;
 
-	va_start(arg, format);
-
-	if (format == NULL)
+	va_start(arguments, format), buffer = malloc(sizeof(char) * 1024);
+	if (!format || !buffer || (format[i] == '%' && !format[i + 1]))
 		return (-1);
-
-	for (a = 0; format[a] != '\0'; a++)
+	if (!format[i])
+		return (0);
+	for (i = 0; format && format[i]; i++)
 	{
-		if (format[a] != "%")
+		if (format[i] == '%')
 		{
-			_putchar(format[a]);
-			char_print++;
-			continue;
+			if (format[i + 1] == '\0')
+			{	print_buf(buffer, ibuf), free(buffer), va_end(arguments);
+				return (-1);
+			}
+			else
+			{	function = get_print_func(format, i + 1);
+				if (function == NULL)
+				{
+					if (format[i + 1] == ' ' && !format[i + 2])
+						return (-1);
+					handl_buf(buffer, format[i], ibuf), len++, i--;
+				}
+				else
+				{
+					len += function(arguments, buffer, ibuf);
+					i += ev_print_func(format, i + 1);
+				}
+			} i++;
 		}
-
-		if (format[a + 1] == "%")
-		{
-			_putchar("%");
-			char_print++;
-			a++;
-			continue;
-		}
-
-		if (format[a + 1] == '\0')
-			return (-1);
-
-		print_ident = identifier(format[a + 1], arg);
-
-		if (print_ident == -1 || print_ident != 0)
-			a++;
-		if (print_ident > 0)
-			char_print += print_ident;
-		if (print_ident == 0)
-		{
-			_putchar("%");
-			char_print++;
-		}
+		else
+			handl_buf(buffer, format[i], ibuf), len++;
+		for (ibuf = len; ibuf > 1024; ibuf -= 1024)
+			;
 	}
-
-	va_end(arg);
-	return (char_print);
+	print_buf(buffer, ibuf), free(buffer), va_end(arguments);
+	return (len);
 }
